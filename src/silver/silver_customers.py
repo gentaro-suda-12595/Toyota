@@ -1,3 +1,5 @@
+# Databricks notebook source
+
 from pyspark.sql import functions as F
 from write_silver import write_silver
 
