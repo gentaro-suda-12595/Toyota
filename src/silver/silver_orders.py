@@ -1,5 +1,3 @@
-# Databricks notebook source
-
 from pyspark.sql.functions import col, to_timestamp, date_format
 from write_silver import write_silver
 

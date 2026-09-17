@@ -1,5 +1,3 @@
-# Databricks notebook source
-
 from pyspark.sql import functions as F
 from write_gold import write_gold
 df_silver_orders = spark.read.table("hands_on.silver.silver_orders")
