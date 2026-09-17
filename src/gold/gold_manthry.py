@@ -15,8 +15,6 @@ gold_df = left_df.groupBy("order_ym","product_category_name")\
          F.countDistinct("order_id").alias("unique_order_count")
     )\
     .orderBy("order_ym", "product_category_name")
-
-display(gold_df)
     
 write_gold(spark, gold_df, "gold_monthly_category_sales")
     
