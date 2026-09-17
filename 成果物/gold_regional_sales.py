@@ -12,8 +12,8 @@ df_regional_sales = df_orders_customers\
 .groupBy("customer_state")\
 .agg(F.sum("total_amount").alias("total_sales"),
 F.countDistinct("customer_unique_id").alias("total_customers"),
-(F.sum("total_amount") / F.countDistinct("customer_unipue_id")).alias("customer_avg_sales")     
+(F.sum("total_amount") / F.countDistinct("customer_unique_id")).alias("customer_avg_sales")     
      )
 
-write_gold(spark,df_regional_sales,"hands_on.gold.gold_regional_sales")
+write_gold(spark,df_regional_sales,"gold_regional_sales")
 
