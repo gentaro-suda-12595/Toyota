@@ -1,0 +1,53 @@
+bundle:
+  name: e_commerce_pipeline
+
+resources:
+  jobs:
+    daily_sales_pipeline:
+      name: "EC Sales Pipeline"
+      tasks:
+        - taks_key: csv_to_bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/sudag@revolvesys.co.jp/Toyota/成果物/bronze/master.py
+
+        - task_key: silver_orders
+          depends_on:
+            - task_key: csv_to_bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/sudag@revolvesys.co.jp/Toyota/成果物/silver/silver_orders.py
+          
+        - task_key: silver_order_items
+          depends_on: 
+            - task_key: csv_to_bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/sudag@revolvesys.co.jp/Toyota/成果物/silver/silver_order_items.py
+        
+        - task_key: silver_products
+          depends_on:
+            - task_key: csv_to_bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/sudag@revolvesys.co.jp/Toyota/成果物/silver/silver_products.py
+        
+        - task_key: silver_customers
+          depends_on: 
+            - task_key: csv_to_bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/sudag@revolvesys.co.jp/Toyota/成果物/silver/silver_customers.py
+        
+        - task_key: gold_manthry
+          depends_on:
+            - task_key: silver_orders
+            - task_key: silver_order_items
+            - task_key: silver_products
+          run_if: ALL_SUCCESS
+          notebook_task:
+            notebook_path: /Workspace/Users/sudag@revolvesys.co.jp/Toyota/成果物/gold/gold_manthry.py
+          
+        - task_key: gold_regional_sales
+          depends_on:
+            - task_key: silver_orders
+            - task_key: silver_order_items
+            - task_key: silver_customers
+          run_if: ALL_SUCCESS
+          notebook_task:
+            notebook_path: /Workspace/Users/sudag@revolvesys.co.jp/Toyota/成果物/gold/gold_regional_sales.py
